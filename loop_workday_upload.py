@@ -222,9 +222,9 @@ def sync_expense_report_line(  # pylint: disable=too-many-arguments
     """
     Sync a single expense report line from Loop to Workday
     """
-    print("Retrieving expense report line " + line_id + " for expense report " + instance_id + " from Workday")
+    print(f"Retrieving expense report line {line_id} for expense report {instance_id} from Workday")
     workday_response = post(
-        url="https://wd5.myworkday.com" + get_line_url + ".htmld", cookies=cookies, data={"id": line_id}, timeout=(5, 5)
+        url=f"https://wd5.myworkday.com{get_line_url}.htmld", cookies=cookies, data={"id": line_id}, timeout=(5, 5)
     )
 
     if workday_response.status_code != 200:
@@ -232,13 +232,13 @@ def sync_expense_report_line(  # pylint: disable=too-many-arguments
         print(workday_response.text)
         raise ValueError("Unexpected response code from Workday")
 
-    print("Uploading expense report line " + line_id + " for expense report " + instance_id + " to Loop")
+    print(f"Uploading expense report line {line_id} for expense report {instance_id} to Loop")
 
     loop_response = put(
-        url=server + "/api/v1/workday/expense-reports/" + instance_id + "/lines/" + line_id,
+        url=f"{server}/api/v1/workday/expense-reports/{instance_id}/lines/{line_id}",
         json=workday_response.json(),
         headers={
-            "Authorization": "Bearer " + token,
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
         },
         timeout=(5, 5),
@@ -253,8 +253,8 @@ def sync_expense_report_line(  # pylint: disable=too-many-arguments
     print(loop_response.text)
 
     for attachment in loop_response.json()["attachments"]:
-        print("Downloading attachment " + attachment + " from Workday")
-        values = search_for_key_value_pair(workday_response.json(), "instanceId", "1074$" + attachment)
+        print(f"Downloading attachment {attachment} from Workday")
+        values = search_for_key_value_pair(workday_response.json(), "instanceId", f"1074${attachment}")
 
         if len(values) != 1:
             print(dumps(workday_response.json()))
@@ -262,7 +262,7 @@ def sync_expense_report_line(  # pylint: disable=too-many-arguments
             raise ValueError("Did not find exactly one widget")
 
         workday_attachment_response = get(
-            url="https://wd5.myworkday.com/gatech/attachment/1074$" + attachment + "/" + values[0]["target"] + ".htmld",
+            url=f"https://wd5.myworkday.com/gatech/attachment/1074${attachment}/{values[0]['target']}.htmld",
             cookies=cookies,
             timeout=(5, 5),
         )
@@ -272,12 +272,12 @@ def sync_expense_report_line(  # pylint: disable=too-many-arguments
             print(workday_attachment_response.text)
             raise ValueError("Unexpected response code from Workday")
 
-        print("Uploading attachment " + attachment + " to Loop")
+        print(f"Uploading attachment {attachment} to Loop")
 
         loop_attachment_response = post(
-            url=server + "/api/v1/workday/attachments/" + attachment,
+            url=f"{server}/api/v1/workday/attachments/{attachment}",
             headers={
-                "Authorization": "Bearer " + token,
+                "Authorization": f"Bearer {token}",
                 "Accept": "application/json",
             },
             files={"attachment": (values[0]["text"], workday_attachment_response.content)},
@@ -294,9 +294,9 @@ def sync_expense_report(cookies: Dict[str, str], instance_id: str, server: str, 
     """
     Sync a single expense report from Workday to Loop
     """
-    print("Retrieving expense report " + instance_id + " from Workday")
+    print(f"Retrieving expense report {instance_id} from Workday")
     workday_response = get(
-        url="https://wd5.myworkday.com/gatech/inst/1$1356/1356$" + instance_id + ".htmld",
+        url=f"https://wd5.myworkday.com/gatech/inst/1$1356/1356${instance_id}.htmld",
         cookies=cookies,
         timeout=(5, 5),
     )
@@ -306,13 +306,13 @@ def sync_expense_report(cookies: Dict[str, str], instance_id: str, server: str, 
         print(workday_response.text)
         raise ValueError("Unexpected response code from Workday")
 
-    print("Uploading expense report " + instance_id + " to Loop")
+    print(f"Uploading expense report {instance_id} to Loop")
 
     loop_response = put(
-        url=server + "/api/v1/workday/expense-reports/" + instance_id,
+        url=f"{server}/api/v1/workday/expense-reports/{instance_id}",
         json=workday_response.json(),
         headers={
-            "Authorization": "Bearer " + token,
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
         },
         timeout=(5, 5),
@@ -349,9 +349,9 @@ def sync_worker(cookies: Dict[str, str], instance_id: str, server: str, token: s
     """
     Sync a worker (user) from Workday to Loop
     """
-    print("Retrieving worker " + instance_id + " from Workday")
+    print(f"Retrieving worker {instance_id} from Workday")
     workday_response = get(
-        url="https://wd5.myworkday.com/gatech/inst/1$37/247$" + instance_id + ".htmld", cookies=cookies, timeout=(5, 5)
+        url=f"https://wd5.myworkday.com/gatech/inst/1$37/247${instance_id}.htmld", cookies=cookies, timeout=(5, 5)
     )
 
     if workday_response.status_code != 200:
@@ -359,13 +359,13 @@ def sync_worker(cookies: Dict[str, str], instance_id: str, server: str, token: s
         print(workday_response.text)
         raise ValueError("Unexpected response code from Workday")
 
-    print("Uploading worker " + instance_id + " to Loop")
+    print(f"Uploading worker {instance_id} to Loop")
 
     loop_response = post(
-        url=server + "/api/v1/workday/workers",
+        url=f"{server}/api/v1/workday/workers",
         json=workday_response.json(),
         headers={
-            "Authorization": "Bearer " + token,
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
         },
         timeout=(5, 5),
@@ -382,9 +382,9 @@ def sync_external_committee_member(cookies: Dict[str, str], instance_id: str, se
     """
     Sync an external committee member from Workday to Loop
     """
-    print("Retrieving external committee member " + instance_id + " from Workday")
+    print(f"Retrieving external committee member {instance_id} from Workday")
     workday_response = post(
-        url="https://wd5.myworkday.com/gatech/inst/1$15341/15341$" + instance_id + ".htmld",
+        url=f"https://wd5.myworkday.com/gatech/inst/1$15341/15341${instance_id}.htmld",
         cookies=cookies,
         data={"preview": 1},
         timeout=(5, 5),
@@ -395,13 +395,13 @@ def sync_external_committee_member(cookies: Dict[str, str], instance_id: str, se
         print(workday_response.text)
         raise ValueError("Unexpected response code from Workday")
 
-    print("Uploading external committee member " + instance_id + " to Loop")
+    print(f"Uploading external committee member {instance_id} to Loop")
 
     loop_response = post(
-        url=server + "/api/v1/workday/external-committee-members",
+        url=f"{server}/api/v1/workday/external-committee-members",
         json=workday_response.json(),
         headers={
-            "Authorization": "Bearer " + token,
+            "Authorization": f"Bearer {token}",
             "Accept": "application/json",
         },
         timeout=(5, 5),
@@ -454,9 +454,9 @@ def main() -> None:
     for cookie in driver.get_cookies():
         cookies[cookie["name"]] = cookie["value"]
 
-    full_url = "https://wd5.myworkday.com" + chunking_url + ".htmld"
+    full_url = f"https://wd5.myworkday.com{chunking_url}.htmld"
 
-    print("Retrieving all results from Workday -", full_url)
+    print(f"Retrieving all results from Workday - {full_url}")
 
     workday_response = post(url=full_url, cookies=cookies, data={"startRow": 1, "maxRows": 500}, timeout=(5, 60))
 
@@ -468,10 +468,10 @@ def main() -> None:
     print("Uploading results to Loop")
 
     loop_response = post(
-        url=args.server + "/api/v1/workday/expense-reports",
+        url=f"{args.server}/api/v1/workday/expense-reports",
         json=workday_response.json(),
         headers={
-            "Authorization": "Bearer " + args.token,
+            "Authorization": f"Bearer {args.token}",
             "Accept": "application/json",
         },
         timeout=(5, 60),
