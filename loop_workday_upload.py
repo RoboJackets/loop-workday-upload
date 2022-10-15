@@ -72,13 +72,20 @@ def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-ma
     companies_field.send_keys("CO503 Georgia Institute of Technology" + Keys.ENTER)
     WebDriverWait(driver, timeout=10).until(lambda d: d.find_element(By.ID, "pill-2501$1"))
 
-    # Enter Cost Center
-    print("Entering Cost Center")
+    # Enter Student Life Cost Center
+    print("Entering Student Life Cost Center")
     cost_center_field = driver.find_element(By.ID, "ExternalField146_7227PromptQualifier1").find_element(
         By.TAG_NAME, "input"
     )
     cost_center_field.send_keys("CC000375" + Keys.ENTER)
     WebDriverWait(driver, timeout=10).until(lambda d: d.find_element(By.ID, "pill-2502$367"))
+
+    print("Entering Mechanical Engineering Cost Center")
+    cost_center_field = driver.find_element(By.ID, "ExternalField146_7227PromptQualifier1").find_element(
+        By.TAG_NAME, "input"
+    )
+    cost_center_field.send_keys("CC000259" + Keys.ENTER)
+    WebDriverWait(driver, timeout=10).until(lambda d: d.find_element(By.ID, "pill-2502$180"))
 
     # Enter Work Tags
     print("Entering Custodial Entity worktag")
@@ -154,7 +161,7 @@ def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-ma
 
     # Click OK
     print("Submitting form")
-    driver.find_element(By.CLASS_NAME, "WN5I").find_element(By.TAG_NAME, "button").click()
+    driver.find_element(By.CLASS_NAME, "WG5I").find_element(By.TAG_NAME, "button").click()
 
     # Wait for results to load
     print("Waiting for report results to load")
