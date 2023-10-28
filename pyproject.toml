@@ -8,10 +8,10 @@ repository = "https://github.com/RoboJackets/loop-workday-upload"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-requests = "^2.28"
-selenium = "^4.5"
-webdriver-manager = "^3.8"
-selenium-wire = "^5.0.0"
+requests = "^2.31"
+selenium = "^4.11"
+webdriver-manager = "^4.0"
+selenium-wire = "^5.1.0"
 
 [tool.poetry.group.dev.dependencies]
 types-requests = "^2.28.11.2"

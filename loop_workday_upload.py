@@ -32,7 +32,7 @@ def log_in_to_workday(driver: Chrome, username: str, password: str) -> None:
     # enter username, password, and submit the form
     username_field = driver.find_element(By.ID, "username")
     password_field = driver.find_element(By.ID, "password")
-    submit_button = driver.find_element(By.NAME, "submit")
+    submit_button = driver.find_element(By.NAME, "submitbutton")
 
     print("Entering username")
     username_field.send_keys(username)
@@ -40,15 +40,6 @@ def log_in_to_workday(driver: Chrome, username: str, password: str) -> None:
     password_field.send_keys(password)
     print("Submitting login form")
     submit_button.click()
-
-    # wait for Duo iframe to load and switch to it
-    print("Waiting for Duo to load")
-    WebDriverWait(driver, timeout=10).until(lambda d: d.find_element(By.TAG_NAME, "iframe"))
-    driver.switch_to.frame(driver.find_element(By.TAG_NAME, "iframe"))
-
-    # click the webauthn button
-    print("Starting WebAuthn")
-    driver.find_element(By.XPATH, "/html/body/div/div/div[1]/div/form/div[1]/fieldset[6]/div[1]/button").click()
 
     # wait for Duo authentication to finish, redirect to Workday, and wait for Workday to fully load
     print("Waiting for authentication to complete")
@@ -140,8 +131,8 @@ def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-ma
     WebDriverWait(driver, timeout=10).until(lambda d: month_input.get_property("value") == "1")
     webdriver.ActionChains(driver).send_keys("01").perform()
     WebDriverWait(driver, timeout=10).until(lambda d: day_input.get_property("value") == "1")
-    webdriver.ActionChains(driver).send_keys("2018").perform()
-    WebDriverWait(driver, timeout=10).until(lambda d: year_input.get_property("value") == "2018")
+    webdriver.ActionChains(driver).send_keys("2023").perform()
+    WebDriverWait(driver, timeout=10).until(lambda d: year_input.get_property("value") == "2023")
 
     # Enter Payee Type
     print("Entering Payee Type")
@@ -161,11 +152,11 @@ def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-ma
 
     # Click OK
     print("Submitting form")
-    driver.find_element(By.CLASS_NAME, "WG5I").find_element(By.TAG_NAME, "button").click()
+    driver.find_element(By.CLASS_NAME, "WI2N").find_element(By.TAG_NAME, "button").click()
 
     # Wait for results to load
     print("Waiting for report results to load")
-    WebDriverWait(driver, timeout=20).until(
+    WebDriverWait(driver, timeout=30).until(
         lambda d: d.find_element(By.ID, "wd-PageContent-6$8105").find_element(
             By.XPATH, "//div[@title='Export to Excel']"
         )
@@ -252,6 +243,7 @@ def sync_expense_report_line(  # pylint: disable=too-many-arguments
     )
 
     if loop_response.status_code != 200:
+        print(workday_response.text)
         print(loop_response.status_code)
         print(loop_response.text)
         raise ValueError("Unexpected response code from Loop")
@@ -500,6 +492,46 @@ def main() -> None:
 
     for expense_report in loop_response.json()["expense-reports"]:
         sync_expense_report(cookies, expense_report, args.server, args.token)
+
+    loop_response = get(
+        url=f"{args.server}/api/v1/workday/sync",
+        headers={
+            "Authorization": f"Bearer {args.token}",
+            "Accept": "application/json",
+        },
+        timeout=(5, 5)
+    )
+
+    if loop_response.status_code != 200:
+        print(loop_response.status_code)
+        print(loop_response.text)
+        raise ValueError("Unexpected response code from Loop")
+
+    print(loop_response.status_code)
+    print(loop_response.json())
+
+    for worker in loop_response.json()["workers"]:
+        sync_worker(cookies, worker, args.server, args.token)
+
+    for ecm in loop_response.json()["external-committee-members"]:
+        sync_external_committee_member(cookies, ecm, args.server, args.token)
+
+    for expense_report in loop_response.json()["expense-reports"]:
+        sync_expense_report(cookies, expense_report, args.server, args.token)
+
+    loop_response = post(
+        url=f"{args.server}/api/v1/workday/sync",
+        headers={
+            "Authorization": f"Bearer {args.token}",
+            "Accept": "application/json",
+        },
+        timeout=(5, 5)
+    )
+
+    if loop_response.status_code != 200:
+        print(loop_response.status_code)
+        print(loop_response.text)
+        raise ValueError("Unexpected response code from Loop")
 
 
 if __name__ == "__main__":
