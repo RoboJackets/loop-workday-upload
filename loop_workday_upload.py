@@ -274,7 +274,7 @@ def sync_expense_report_line(  # pylint: disable=too-many-arguments
         print(f"Uploading attachment {attachment} to Loop")
 
         loop_attachment_response = post(
-            url=f"{server}/api/v1/workday/attachments/{attachment}",
+            url=f"{server}/api/v1/workday/expense-reports/{instance_id}/lines/{line_id}/attachments/{attachment}",
             headers={
                 "Authorization": f"Bearer {token}",
                 "Accept": "application/json",
