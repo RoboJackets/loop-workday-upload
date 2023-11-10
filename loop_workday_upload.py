@@ -499,7 +499,7 @@ def main() -> None:
             "Authorization": f"Bearer {args.token}",
             "Accept": "application/json",
         },
-        timeout=(5, 5)
+        timeout=(5, 5),
     )
 
     if loop_response.status_code != 200:
@@ -525,7 +525,7 @@ def main() -> None:
             "Authorization": f"Bearer {args.token}",
             "Accept": "application/json",
         },
-        timeout=(5, 5)
+        timeout=(5, 5),
     )
 
     if loop_response.status_code != 200:
