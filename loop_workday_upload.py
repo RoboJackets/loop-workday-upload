@@ -29,21 +29,26 @@ def log_in_to_workday(driver: Chrome, username: str, password: str) -> None:
     # wait for CAS login page to load
     WebDriverWait(driver, timeout=10).until(lambda d: d.find_element(By.ID, "username"))
 
-    # enter username, password, and submit the form
-    username_field = driver.find_element(By.ID, "username")
-    password_field = driver.find_element(By.ID, "password")
-    submit_button = driver.find_element(By.NAME, "submitbutton")
+    timeout = 20
 
-    print("Entering username")
-    username_field.send_keys(username)
-    print("Entering password")
-    password_field.send_keys(password)
-    print("Submitting login form")
-    submit_button.click()
+    if username is not None and password is not None:
+        # enter username, password, and submit the form
+        username_field = driver.find_element(By.ID, "username")
+        password_field = driver.find_element(By.ID, "password")
+        submit_button = driver.find_element(By.NAME, "submitbutton")
+
+        print("Entering username")
+        username_field.send_keys(username)
+        print("Entering password")
+        password_field.send_keys(password)
+        print("Submitting login form")
+        submit_button.click()
+    else:
+        timeout = 60
 
     # wait for Duo authentication to finish, redirect to Workday, and wait for Workday to fully load
     print("Waiting for authentication to complete")
-    WebDriverWait(driver, timeout=20).until(lambda d: d.title == "Home - Workday")
+    WebDriverWait(driver, timeout=timeout).until(lambda d: d.title == "Home - Workday")
 
 
 def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-many-locals,too-many-statements
@@ -434,12 +439,12 @@ def main() -> None:
     parser.add_argument(
         "--georgia-tech-username",
         help="the Georgia Tech username to authenticate to Workday",
-        required=True,
+        required=False,
     )
     parser.add_argument(
         "--georgia-tech-password",
         help="the Georgia Tech password to authenticate to Workday",
-        required=True,
+        required=False,
     )
     args = parser.parse_args()
     driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()))
