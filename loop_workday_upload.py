@@ -16,7 +16,7 @@ from seleniumwire import webdriver  # type: ignore
 from seleniumwire.utils import decode  # type: ignore
 from seleniumwire.webdriver import Chrome  # type: ignore
 
-from webdriver_manager.chrome import ChromeDriverManager  # type: ignore
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def log_in_to_workday(driver: Chrome, username: str, password: str) -> None:
@@ -128,11 +128,11 @@ def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-ma
     assert year_input is not None
 
     webdriver.ActionChains(driver).send_keys("01").perform()
-    WebDriverWait(driver, timeout=10).until(lambda d: month_input.get_property("value") == "1")
+    WebDriverWait(driver, timeout=10).until(lambda d: month_input.get_property("value") == "1")  # type: ignore
     webdriver.ActionChains(driver).send_keys("01").perform()
-    WebDriverWait(driver, timeout=10).until(lambda d: day_input.get_property("value") == "1")
+    WebDriverWait(driver, timeout=10).until(lambda d: day_input.get_property("value") == "1")  # type: ignore
     webdriver.ActionChains(driver).send_keys("2023").perform()
-    WebDriverWait(driver, timeout=10).until(lambda d: year_input.get_property("value") == "2023")
+    WebDriverWait(driver, timeout=10).until(lambda d: year_input.get_property("value") == "2023")  # type: ignore
 
     # Enter Payee Type
     print("Entering Payee Type")
