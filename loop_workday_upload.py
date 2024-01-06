@@ -133,11 +133,11 @@ def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-ma
     assert year_input is not None
 
     webdriver.ActionChains(driver).send_keys("01").perform()
-    WebDriverWait(driver, timeout=10).until(lambda d: month_input.get_property("value") == "1")  # type: ignore
+    WebDriverWait(driver, timeout=10).until(lambda d: month_input.get_property("value") == "1")
     webdriver.ActionChains(driver).send_keys("01").perform()
-    WebDriverWait(driver, timeout=10).until(lambda d: day_input.get_property("value") == "1")  # type: ignore
+    WebDriverWait(driver, timeout=10).until(lambda d: day_input.get_property("value") == "1")
     webdriver.ActionChains(driver).send_keys("2023").perform()
-    WebDriverWait(driver, timeout=10).until(lambda d: year_input.get_property("value") == "2023")  # type: ignore
+    WebDriverWait(driver, timeout=10).until(lambda d: year_input.get_property("value") == "2023")
 
     # Enter Payee Type
     print("Entering Payee Type")
