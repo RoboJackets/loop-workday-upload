@@ -908,13 +908,13 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "selenium"
-version = "4.16.0"
+version = "4.17.1"
 description = ""
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "selenium-4.16.0-py3-none-any.whl", hash = "sha256:aec71f4e6ed6cb3ec25c9c1b5ed56ae31b6da0a7f17474c7566d303f84e6219f"},
-    {file = "selenium-4.16.0.tar.gz", hash = "sha256:b2e987a445306151f7be0e6dfe2aa72a479c2ac6a91b9d5ef2d6dd4e49ad0435"},
+    {file = "selenium-4.17.1-py3-none-any.whl", hash = "sha256:8375a25188ffd478ad54f653a125efe23477dfbce93af94d46667f3945270bcf"},
+    {file = "selenium-4.17.1.tar.gz", hash = "sha256:8203707502f8200c1882a49b9584b2d84d4be5152f3a418cc731c7cb5e813843"},
 ]
 
 [package.dependencies]
@@ -1188,4 +1188,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "f1c8d155440f490dcc6b615a52fdd966f30d56407d83ed6f1af1c073ec8565d6"
+content-hash = "c2a611d36ffc770421159c9a337570ad0903228f2ca642540a0c943e08a69f1e"
