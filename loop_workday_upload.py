@@ -1,6 +1,7 @@
 """
 Upload data from Workday to Loop
 """
+
 from argparse import ArgumentParser
 from json import JSONDecodeError, dumps, loads
 from typing import Any, Dict, Mapping
