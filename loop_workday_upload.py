@@ -47,9 +47,14 @@ def log_in_to_workday(driver: Chrome, username: str, password: str) -> None:
     else:
         timeout = 60
 
-    # wait for Duo authentication to finish, redirect to Workday, and wait for Workday to fully load
+    # wait for Duo authentication to finish, redirect to Workday, and wait for Workday to start loading
     print("Waiting for authentication to complete")
     WebDriverWait(driver, timeout=timeout).until(lambda d: d.title == "Home - Workday")
+
+    # Wait for the homepage to fully load, because if you don't, it'll close the search window later
+    print("Waiting for homepage to fully load")
+    (WebDriverWait(driver, timeout=10)
+     .until(lambda d: d.find_element(By.CSS_SELECTOR, "div[data-automation-id='pex-home-banner']")))
 
 
 def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-many-locals,too-many-statements
@@ -158,7 +163,7 @@ def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-ma
 
     # Click OK
     print("Submitting form")
-    driver.find_element(By.CLASS_NAME, "WI2N").find_element(By.TAG_NAME, "button").click()
+    driver.find_element(By.CSS_SELECTOR, "button[data-automation-id='wd-CommandButton_uic_okButton']").click()
 
     # Wait for results to load
     print("Waiting for report results to load")
