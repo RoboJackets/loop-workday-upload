@@ -163,7 +163,7 @@ def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-ma
 
     # Click OK
     print("Submitting form")
-    driver.find_element(By.CLASS_NAME, "WI2N").find_element(By.TAG_NAME, "button").click()
+    driver.find_element(By.CSS_SELECTOR, "button[data-automation-id='wd-CommandButton_uic_okButton']").click()
 
     # Wait for results to load
     print("Waiting for report results to load")
