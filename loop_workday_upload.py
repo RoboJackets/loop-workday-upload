@@ -53,8 +53,11 @@ def log_in_to_workday(driver: Chrome, username: str, password: str) -> None:
 
     # Wait for the homepage to fully load, because if you don't, it'll close the search window later
     print("Waiting for homepage to fully load")
-    (WebDriverWait(driver, timeout=10)
-     .until(lambda d: d.find_element(By.CSS_SELECTOR, "div[data-automation-id='pex-home-banner']")))
+    (
+        WebDriverWait(driver, timeout=10).until(
+            lambda d: d.find_element(By.CSS_SELECTOR, "div[data-automation-id='pex-home-banner']")
+        )
+    )
 
 
 def search_for_expense_reports(driver: Chrome) -> str:  # pylint: disable=too-many-locals,too-many-statements
