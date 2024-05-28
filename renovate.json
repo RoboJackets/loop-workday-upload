@@ -4,7 +4,9 @@
     ],
     "labels": [],
     "reviewers": [],
-    "ignoreDeps": [],
+    "ignoreDeps": [
+        "blinker"
+    ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
     "rebaseStalePrs": true,
