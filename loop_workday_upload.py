@@ -228,7 +228,7 @@ def search_for_key_value_pair(widgets: Any, key: str, value: str) -> list[Mappin
     return results
 
 
-def sync_expense_report_line(  # pylint: disable=too-many-arguments
+def sync_expense_report_line(  # pylint: disable=too-many-positional-arguments
     cookies: Dict[str, str], get_line_url: str, instance_id: str, line_id: str, server: str, token: str
 ) -> None:
     """
