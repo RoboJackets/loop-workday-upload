@@ -1,6 +1,6 @@
 {
     "extends": [
-        "config:base"
+        "config:recommended"
     ],
     "labels": [],
     "reviewers": [],
@@ -9,25 +9,10 @@
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
-    "rebaseStalePrs": true,
+    "rebaseWhen": "behind-base-branch",
     "vulnerabilityAlerts": {},
     "automerge": true,
     "platformAutomerge": true,
-    "python": {
-        "packageRules": [
-            {
-                "matchDepNames": ["python"],
-                "rangeStrategy": "replace"
-            }
-        ],
-        "lockFileMaintenance": {
-            "enabled": true,
-            "schedule": [
-                "before 4pm every weekday except before 9am every weekday"
-            ],
-            "prPriority": -9
-        }
-    },
     "rangeStrategy": "pin",
     "timezone": "America/New_York",
     "schedule": [
@@ -39,5 +24,23 @@
             "before 4pm every weekday except before 9am every weekday"
         ],
         "prPriority": -9
-    }
+    },
+    "packageRules": [
+        {
+            "matchCategories": [
+                "python"
+            ],
+            "lockFileMaintenance": {
+                "enabled": true,
+                "schedule": [
+                    "before 4pm every weekday except before 9am every weekday"
+                ],
+                "prPriority": -9
+            },
+            "matchDepNames": [
+                "python"
+            ],
+            "rangeStrategy": "replace"
+        }
+    ]
 }
