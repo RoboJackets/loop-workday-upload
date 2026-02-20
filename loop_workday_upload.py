@@ -8,7 +8,7 @@ from typing import Any, Dict, Mapping
 
 from requests import get, post, put
 
-from selenium.webdriver import Keys
+from selenium.webdriver import Keys  # pylint: disable=no-name-in-module
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
