@@ -8,7 +8,7 @@ from typing import Any, Dict, Mapping
 
 from requests import get, post, put
 
-from selenium.webdriver import Keys
+from selenium.webdriver import Keys  # pylint: disable=no-name-in-module
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -228,7 +228,7 @@ def search_for_key_value_pair(widgets: Any, key: str, value: str) -> list[Mappin
     return results
 
 
-def sync_expense_report_line(  # pylint: disable=too-many-arguments
+def sync_expense_report_line(  # pylint: disable=too-many-positional-arguments,too-many-arguments
     cookies: Dict[str, str], get_line_url: str, instance_id: str, line_id: str, server: str, token: str
 ) -> None:
     """
