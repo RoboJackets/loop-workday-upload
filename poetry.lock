@@ -265,7 +265,7 @@ description = "Foreign Function Interface for Python calling C code."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
-markers = "implementation_name != \"pypy\" and os_name == \"nt\" or platform_python_implementation != \"PyPy\""
+markers = "os_name == \"nt\" and implementation_name != \"pypy\" or platform_python_implementation != \"PyPy\""
 files = [
     {file = "cffi-2.1.0-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:b65f590ef2a44640f9a05dbb548a429b4ade77913ce683ac8b1480777658a6c0"},
     {file = "cffi-2.1.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:164bff1657b2a74f0b6d54e11c9b375bc97b931f2ca9c43fcf875838da1570dd"},
@@ -1034,7 +1034,7 @@ description = "C parser in Python"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
-markers = "(implementation_name != \"pypy\" or platform_python_implementation != \"PyPy\") and implementation_name != \"PyPy\" and (os_name == \"nt\" or platform_python_implementation != \"PyPy\")"
+markers = "os_name == \"nt\" and implementation_name != \"pypy\" and implementation_name != \"PyPy\" or platform_python_implementation != \"PyPy\" and implementation_name != \"PyPy\""
 files = [
     {file = "pycparser-3.0-py3-none-any.whl", hash = "sha256:b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992"},
     {file = "pycparser-3.0.tar.gz", hash = "sha256:600f49d217304a5902ac3c37e1281c9fe94e4d0489de643a9504c5cdfdfc6b29"},
@@ -1243,14 +1243,14 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<8)"]
 
 [[package]]
 name = "selenium"
-version = "4.45.0"
+version = "4.46.0"
 description = "Official Python bindings for Selenium WebDriver"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "selenium-4.45.0-py3-none-any.whl", hash = "sha256:1fd9d0dc08192b2f8100e264ed720f83b05d2dd3a7feff673df04e0c7580df4b"},
-    {file = "selenium-4.45.0.tar.gz", hash = "sha256:563f0c4102f112df1cda30d46ce6d177b2e4a7a3d4b0756902d5dc84d3a8a365"},
+    {file = "selenium-4.46.0-py3-none-any.whl", hash = "sha256:f03e864770a21ab32009961c9d015cb2c6275eba45c926c272e02d90af423aad"},
+    {file = "selenium-4.46.0.tar.gz", hash = "sha256:54f7e1a4df5f7508ac8c38ce2ea584db1b27083dd79962b22524219219df5cbe"},
 ]
 
 [package.dependencies]
@@ -1658,4 +1658,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "29d5a97b8bf0c14fb475cad41e327e5b778fa6c852984ac0d5ce06d8864229c9"
+content-hash = "54803cdb3bc692b37cd0bab8de06f4b48df9177a385f4d08f798c9b0a6edc96c"
