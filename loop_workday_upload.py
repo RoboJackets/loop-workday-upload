@@ -266,8 +266,9 @@ def sync_expense_report_line(  # pylint: disable=too-many-positional-arguments,t
             print(dumps(values))
             raise ValueError("Did not find exactly one widget")
 
+        attachment_url = f"https://wd5.myworkday.com/gatech/attachment/1074${attachment}/{values[0]['target']}"
         workday_attachment_response = get(
-            url=f"https://wd5.myworkday.com/gatech/attachment/1074${attachment}/{values[0]['target']}.htmld",
+            url=attachment_url,
             cookies=cookies,
             timeout=(5, 5),
         )
