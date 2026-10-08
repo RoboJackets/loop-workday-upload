@@ -1432,14 +1432,14 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<8)"]
 
 [[package]]
 name = "selenium"
-version = "4.49.0"
+version = "4.50.0"
 description = "Official Python bindings for Selenium WebDriver"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "selenium-4.49.0-py3-none-any.whl", hash = "sha256:0d1de9ec6977aa2d5f766d923d5076fdffa91681a8d4ffc9e3381a36839a20f2"},
-    {file = "selenium-4.49.0.tar.gz", hash = "sha256:c9d91274e5f55835e12b524adf1f231739ea811a8866d810e5bb42ba87cd8eda"},
+    {file = "selenium-4.50.0-py3-none-any.whl", hash = "sha256:f724a38a7fd8b0561c6767c620bd9b2c7bd8012d4cb664b2ad23064e5d67d0df"},
+    {file = "selenium-4.50.0.tar.gz", hash = "sha256:80402fb6f48e0ee2183ec1d58b257a593dcd5c8130c1e6419ee7509f2128be5d"},
 ]
 
 [package.dependencies]
@@ -1847,4 +1847,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "e844475faffb9e21c3529c1ff28a245f37a404a7997443b3844a6178eee176dc"
+content-hash = "e27246db6be8ded93648949d6295a8bd4485e23a03ef08e37424e1882333e0d3"
