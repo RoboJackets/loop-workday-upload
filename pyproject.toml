@@ -7,7 +7,7 @@ authors = ["Kristaps Berzinch <kristaps@berzin.ch>"]
 repository = "https://github.com/RoboJackets/loop-workday-upload"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 requests = "2.34.2"
 selenium = "4.51.0"
 webdriver-manager = "4.1.2"
