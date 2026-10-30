@@ -9,7 +9,7 @@ repository = "https://github.com/RoboJackets/loop-workday-upload"
 [tool.poetry.dependencies]
 python = "^3.11"
 requests = "2.34.2"
-selenium = "4.51.0"
+selenium = "4.52.0"
 webdriver-manager = "4.1.2"
 selenium-wire = "5.1.0"
 blinker = "1.7.0"
